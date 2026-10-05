@@ -6,6 +6,11 @@ A safety-checked, provider-agnostic RAG and agent pipeline for healthcare assist
 Built with a six-agent deterministic pipeline, structured output schemas, and
 comprehensive guardrails.
 
+## Demo Recording and Screenshot
+
+- [Watch or download the Caremate AI demo recording (MP4)](recordings/20261005-2147-18.1466588.mp4)
+- [View the patient care timeline screenshot](docs/screenshots/care-timeline-demo.png)
+
 ## Quick Start (Zero API Keys Required)
 
 ```bash
