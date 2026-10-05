@@ -1,0 +1,35 @@
+/* Custom scrollbar for Firefox */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 #f1f5f9;
+}
+
+/* Card hover effect */
+.hover-card:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+}
+
+/* Pulse animation for active indicators */
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+.animate-pulse-dot {
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+
+/* Medical badge styles */
+.badge-success {
+  @apply bg-green-100 text-green-800;
+}
+.badge-danger {
+  @apply bg-red-100 text-red-800;
+}
+.badge-warning {
+  @apply bg-amber-100 text-amber-800;
+}
+.badge-info {
+  @apply bg-blue-100 text-blue-800;
+}

@@ -1,0 +1,32 @@
+PATIENT DOCUMENT — TREATMENT SUMMARY — DEMO / SAMPLE DATA
+
+PATIENT (DEMO): Synthetic sample patient
+ACCESSION (DEMO): TS-S0001
+PREPARED: 2025-12-04 (synthetic date)
+
+OVERVIEW
+58-year-old woman, diagnosed with early-stage breast cancer 14 months ago.
+Treated with breast-conserving surgery (lumpectomy) with sentinel lymph
+node biopsy, followed by adjuvant chemotherapy and radiation therapy.
+Currently on adjuvant endocrine therapy (an aromatase inhibitor).
+
+MEDICATIONS (DEMO)
+- Letrozole 2.5 mg once daily (started 2025-08-15)
+- Calcium 500 mg and vitamin D 400 IU twice daily
+
+RECENT OBSERVATIONS (DEMO)
+- Appetite reduced since completing chemotherapy, especially in the morning
+- Weight down approximately 4% from baseline
+- Leg cramps resolved after switching from tamoxifen
+
+FOLLOW-UP PLAN (DEMO)
+- Surveillance mammogram every 6 months
+- Repeat blood count and albumin before the next oncology visit
+- Dietitian referral placed for appetite and weight support
+
+DEMO / SAMPLE DATA NOTICE
+This is a synthetic sample document. No real patient information is
+contained. Format inspired by Synthea (MIT license, github.com/
+synthetichealth/synthea) and public patient-education material (MedlinePlus
+/ NCI, public domain); the text is original content written for this
+project.

@@ -1,0 +1,26 @@
+SURGICAL PATHOLOGY REPORT — DEMO / SAMPLE DATA
+
+SPECIMEN: Left breast lumpectomy with sentinel lymph nodes (synthetic specimen)
+ACCESSION (DEMO): PS-S0001
+PROCEDURE DATE: 2025-04-18 (synthetic date)
+
+DIAGNOSIS
+Invasive ductal carcinoma, grade 2, with 2 of 14 sentinel lymph nodes
+positive. Tumor size 2.1 cm. Estrogen receptor positive, progesterone
+receptor positive, HER2 negative.
+
+MARGINS
+All surgical margins clear of tumor; closest margin 6 mm.
+
+LYMPHOVASCULAR INVASION
+Present, focal.
+
+NOT ADDRESSED IN THIS REPORT
+This report describes only the removed breast tissue and lymph nodes. It
+does not describe distant organs such as liver, lung or bone.
+
+DEMO / SAMPLE DATA NOTICE
+This is a synthetic sample document. No real patient information is
+contained. Format inspired by Synthea (MIT license) and public
+patient-education material (MedlinePlus / NCI, public domain); the text is
+original content written for this project.

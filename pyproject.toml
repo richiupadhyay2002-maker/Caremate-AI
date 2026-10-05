@@ -1,0 +1,45 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "caremate-ai"
+version = "0.1.0"
+description = "Caremate AI — Safety-checked, provider-agnostic RAG and agent pipeline for healthcare"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+authors = [{name = "Caremate AI Team"}]
+dependencies = [
+    "pydantic>=2.0",
+    "python-dotenv>=1.0",
+    "numpy>=1.26",
+    "faiss-cpu>=1.7",
+    "sentence-transformers>=3.0",
+    "pypdf>=5.0",
+    "pillow>=10.0",
+    "pytesseract>=0.3.10",
+    "python-multipart>=0.0.9",
+    "python-jose[cryptography]>=3.3",
+    "passlib[bcrypt]>=1.7",
+]
+
+[project.optional-dependencies]
+providers = [
+    "openai>=1.0",
+    "anthropic>=0.20",
+    "groq>=0.10",
+]
+dev = [
+    "pytest>=8.0",
+    "pytest-asyncio>=0.23",
+    "reportlab>=4.0",
+    "pdf2image>=1.16",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+asyncio_mode = "auto"

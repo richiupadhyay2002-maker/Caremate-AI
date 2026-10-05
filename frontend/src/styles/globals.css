@@ -1,0 +1,115 @@
+/* Google Fonts � Source Serif 4 (editorial headings) + Inter (legible body) */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Source+Serif+4:wght@400;600;700&display=swap');
+
+@import "tailwindcss";
+
+@theme {
+  /* Clinical palette
+     NOTE: Tailwind v4 generates utilities (bg-*, text-*, border-*) ONLY
+     from the `--color-*` namespace (singular). Using `--colors-*` produces
+     no utility classes at all — everything renders unstyled. */
+  --color-clinical-bg: #F5F7F6;
+  --color-clinical-surface: #FFFFFF;
+  --color-clinical-border: #DCE3E0;
+  --color-sidebar-bg: #0F2422;
+  --color-sidebar-text: #CFE0DB;
+  --color-sidebar-text-inactive: #7FA69C;
+  --color-sidebar-pill-hover: rgba(255, 255, 255, 0.10);
+  --color-ink-primary: #132524;
+  --color-ink-secondary: #5C6B68;
+  --color-brand-teal: #2F6F68;
+  --color-brand-teal-hover: #245A53;
+  --color-status-safe: #2E7D5B;
+  --color-status-safe-bg: #E7F3ED;
+  --color-status-review: #9A6B00;
+  --color-status-review-bg: #FBF1DC;
+  --color-status-urgent: #B5482A;
+  --color-status-urgent-bg: #FBEAE3;
+  /* Legacy aliases */
+  --color-primary: #2563eb;
+  --color-primary-dark: #1d4ed8;
+  --color-secondary: #0f7490;
+  --color-success: #16a34a;
+  --color-danger: #dc2626;
+  --color-warning: #d97706;
+  /* Fonts — `font-heading` / `font-sans` utilities need --font-* */
+  --font-heading: 'Source Serif 4', serif;
+  --font-sans: Inter, sans-serif;
+  /* Border radius */
+  --radius-card: 10px;
+  --radius-button: 8px;
+  /* No shadows (clinical aesthetic) */
+  --shadow-sm: 0 0 #0000;
+  --shadow-md: 0 0 #0000;
+  --shadow-lg: 0 0 #0000;
+  --shadow-xl: 0 0 #0000;
+  --shadow-2xl: 0 0 #0000;
+  --shadow: 0 0 #0000;
+  --shadow-dashed: 0 0 #0000;
+  --shadow-inset: 0 0 #0000;
+  --shadow-none: 0 0 #0000;
+}
+
+/* --------------------------------------------------------------
+   Clinical base styles
+   -------------------------------------------------------------- */
+@layer base {
+  html {
+    background-color: var(--color-clinical-bg);
+    font-size: 0.9375rem;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-clinical-bg);
+    color: var(--color-ink-primary);
+    font-family: var(--font-sans);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--color-ink-primary);
+  }
+
+  h1 { font-size: 2rem; }
+  h2 { font-size: 1.25rem; }
+  h3 { font-size: 1.125rem; }
+
+  .text-muted {
+    color: var(--color-ink-secondary);
+  }
+
+  a {
+    color: var(--color-brand-teal);
+    text-decoration: none;
+  }
+  a:hover { text-decoration: underline; }
+}
+
+.border-hairline {
+  border: 1px solid var(--color-clinical-border);
+}
+
+/* Custom scrollbar */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: #9ca3af var(--color-clinical-bg);
+}
+::-webkit-scrollbar { width: 7px; }
+::-webkit-scrollbar-track { background: var(--color-clinical-bg); }
+::-webkit-scrollbar-thumb { background: #9ca3af; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #6b7280; }
+
+/* Pulse dot for timeline markers */
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+.animate-pulse-dot {
+  animation: pulse-dot 2s ease-in-out infinite;
+}

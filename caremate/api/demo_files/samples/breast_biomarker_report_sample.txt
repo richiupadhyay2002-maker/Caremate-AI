@@ -1,0 +1,24 @@
+BREAST BIOMARKER REPORT — DEMO / SAMPLE DATA
+
+SPECIMEN: Left breast core biopsy, 3 cores (synthetic specimen)
+ACCESSION (DEMO): BM-S0001
+COLLECTED: 2025-04-18 (synthetic date)
+
+HORMONE RECEPTORS (IMMUNOHISTOCHEMISTRY)
+- Estrogen receptor (ER): Positive, Allred score 8/9 (strong, 95% of cells)
+- Progesterone receptor (PR): Positive, Allred score 6/9
+- HER2: Negative (IHC 1+; reflex ISH not indicated)
+- Ki-67 proliferation index: 18%
+
+MOLECULAR SUBTYPE (DEMO)
+- Luminal A-like (ER and PR positive, HER2 negative, low proliferation)
+
+COMMENT (DEMO)
+Biomarker results support endocrine therapy as a treatment option. This
+sample report is synthetic and contains no real patient information. It is
+provided for demonstration and testing of the CareMate AI platform only.
+
+SOURCES / LICENSE NOTE (DEMO)
+Format inspired by Synthea (MIT license, github.com/synthetichealth/synthea)
+and public patient-education material from MedlinePlus / NCI (public domain).
+The text of this file is original content written for this project.

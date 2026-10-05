@@ -1,0 +1,28 @@
+IMAGING / RADIOLOGY REPORT — DEMO / SAMPLE DATA
+
+EXAMINATION: Diagnostic mammogram, bilateral, with tomosynthesis
+ACCESSION (DEMO): RD-S0001
+EXAM DATE: 2026-02-20 (synthetic date)
+
+TECHNIQUE
+Bilateral digital mammography with tomosynthesis.
+
+FINDINGS
+Left breast: post-surgical scarring and architectural distortion, stable
+compared with prior examination.
+Right breast: benign-appearing calcifications.
+
+IMPRESSION
+No evidence of recurrence in the treated left breast. Right breast findings
+benign. BI-RADS category 2. Recommend routine screening.
+
+NOT ADDRESSED IN THIS REPORT
+A mammogram images the breast only. It cannot detect disease in the abdomen,
+chest, bones or blood, and does not replace blood tests or physical
+examination.
+
+DEMO / SAMPLE DATA NOTICE
+This is a synthetic sample document. No real patient information is
+contained. Format inspired by Synthea (MIT license) and public
+patient-education material (MedlinePlus / NCI, public domain); the text is
+original content written for this project.

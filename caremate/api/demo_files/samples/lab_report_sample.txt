@@ -1,0 +1,27 @@
+COMPLETE LABORATORY REPORT — DEMO / SAMPLE DATA
+
+PATIENT (DEMO): Synthetic sample patient
+ACCESSION (DEMO): LB-S0001
+COLLECTED: 2026-01-19 (synthetic date)
+
+HEMOGRAM
+- Hemoglobin: 11.8 g/dL (reference 12.0-15.5 for adult women) - LOW
+- White blood cell count: 5.9 x 10^9/L (reference 4.0-11.0) - NORMAL
+- Platelet count: 265 x 10^9/L (reference 150-400) - NORMAL
+
+CHEMISTRY
+- Albumin: 3.6 g/dL (reference 3.5-5.0) - LOW-NORMAL
+- Creatinine: 0.9 mg/dL (reference 0.6-1.2) - NORMAL
+- ALT: 22 U/L (reference 7-35) - NORMAL
+- Total bilirubin: 0.7 mg/dL (reference 0.2-1.2) - NORMAL
+
+INTERPRETATION
+Mild anemia, possibly related to ongoing treatment and inflammation. No
+urgent abnormality identified. Recommend repeat testing at next scheduled
+visit.
+
+DEMO / SAMPLE DATA NOTICE
+This is a synthetic sample document. No real patient information is
+contained. Format inspired by Synthea (MIT license) and public
+patient-education material (MedlinePlus / NCI, public domain); the text is
+original content written for this project.
