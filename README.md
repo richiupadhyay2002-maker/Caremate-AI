@@ -9,7 +9,7 @@ comprehensive guardrails.
 ## Demo Recording and Screenshot
 
 - [Watch or download the Caremate AI demo recording (MP4)](recordings/20261005-2147-18.1466588.mp4)
-- [View the patient care timeline screenshot](docs/screenshots/care-timeline-demo.png)
+![Patient care timeline demo screenshot](docs/screenshots/care-timeline-demo.png)
 
 ## Quick Start (Zero API Keys Required)
 
