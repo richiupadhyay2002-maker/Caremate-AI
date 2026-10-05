@@ -90,7 +90,7 @@ class TestSettings:
     def test_effective_provider_with_key(self, monkeypatch, env_key, provider):
         for key in ("OPENAI_API_KEY", "ANTHROPIC_API_KEY", "GROQ_API_KEY"):
             monkeypatch.delenv(key, raising=False)
-        monkeypatch.setenv(f"CAREMMATE_LLM_PROVIDER", provider)
+        monkeypatch.setenv(f"CAREMATE_LLM_PROVIDER", provider)
         monkeypatch.setenv(env_key, "test-key-123")
         s = Settings()
         assert s.is_mock_mode is False
@@ -98,7 +98,7 @@ class TestSettings:
 
     def test_provider_selected_without_key_falls_back_to_mock(self, monkeypatch):
         monkeypatch.delenv("OPENAI_API_KEY", raising=False)
-        monkeypatch.setenv("CAREMMATE_LLM_PROVIDER", "openai")
+        monkeypatch.setenv("CAREMATE_LLM_PROVIDER", "openai")
         s = Settings()
         assert s.effective_llm_provider == "mock"
 
@@ -111,20 +111,20 @@ class TestSettings:
         assert s.effective_llm_provider == "mock"
 
     def test_jwt_secret_auto_generated_when_missing(self, monkeypatch):
-        monkeypatch.delenv("CAREMMATE_JWT_SECRET", raising=False)
+        monkeypatch.delenv("CAREMATE_JWT_SECRET", raising=False)
         s1 = Settings()
         s2 = Settings()
         assert s1.jwt_secret != s2.jwt_secret  # each instance gets a fresh secret
         assert len(s1.jwt_secret) >= 32
 
     def test_jwt_secret_from_env_is_stable(self, monkeypatch):
-        monkeypatch.setenv("CAREMMATE_JWT_SECRET", "super-secret-value")
+        monkeypatch.setenv("CAREMATE_JWT_SECRET", "super-secret-value")
         s = Settings()
         assert s.jwt_secret == "super-secret-value"
 
     def test_vector_dim_and_top_k_from_env(self, monkeypatch):
-        monkeypatch.setenv("CAREMMATE_VECTOR_DIM", "128")
-        monkeypatch.setenv("CAREMMATE_TOP_K", "10")
+        monkeypatch.setenv("CAREMATE_VECTOR_DIM", "128")
+        monkeypatch.setenv("CAREMATE_TOP_K", "10")
         s = Settings()
         assert s.vector_dim == 128
         assert s.top_k == 10
@@ -147,7 +147,7 @@ class TestGetSettings:
 
     def test_cache_clear_creates_new_instance(self, monkeypatch):
         get_settings.cache_clear()
-        monkeypatch.setenv("CAREMMATE_TOP_K", "3")
+        monkeypatch.setenv("CAREMATE_TOP_K", "3")
         a = get_settings()
         assert a.top_k == 3
         get_settings.cache_clear()
@@ -167,29 +167,29 @@ class TestValidateProdSecrets:
         return s
 
     def test_noop_when_force_prod_secrets_false(self, monkeypatch):
-        monkeypatch.delenv("CAREMMATE_JWT_SECRET", raising=False)
+        monkeypatch.delenv("CAREMATE_JWT_SECRET", raising=False)
         validate_prod_secrets(self._settings(force_prod_secrets=False))  # no raise
 
     def test_raises_when_jwt_secret_missing_from_env(self, monkeypatch):
-        monkeypatch.delenv("CAREMMATE_JWT_SECRET", raising=False)
+        monkeypatch.delenv("CAREMATE_JWT_SECRET", raising=False)
         s = self._settings(force_prod_secrets=True, encryption_key="fernet-key")
-        with pytest.raises(RuntimeError, match="CAREMMATE_JWT_SECRET"):
+        with pytest.raises(RuntimeError, match="CAREMATE_JWT_SECRET"):
             validate_prod_secrets(s)
 
     def test_raises_when_encryption_key_missing(self, monkeypatch):
-        monkeypatch.setenv("CAREMMATE_JWT_SECRET", "stable-secret")
+        monkeypatch.setenv("CAREMATE_JWT_SECRET", "stable-secret")
         s = self._settings(force_prod_secrets=True, encryption_key=None)
-        with pytest.raises(RuntimeError, match="CAREMMATE_ENCRYPTION_KEY"):
+        with pytest.raises(RuntimeError, match="CAREMATE_ENCRYPTION_KEY"):
             validate_prod_secrets(s)
 
     def test_passes_when_both_provided(self, monkeypatch):
-        monkeypatch.setenv("CAREMMATE_JWT_SECRET", "stable-secret")
+        monkeypatch.setenv("CAREMATE_JWT_SECRET", "stable-secret")
         s = self._settings(force_prod_secrets=True, encryption_key="fernet-key")
         validate_prod_secrets(s)  # no raise
 
     def test_jwt_secret_checked_before_encryption_key(self, monkeypatch):
         """Both missing -> JWT error surfaces first."""
-        monkeypatch.delenv("CAREMMATE_JWT_SECRET", raising=False)
+        monkeypatch.delenv("CAREMATE_JWT_SECRET", raising=False)
         s = self._settings(force_prod_secrets=True, encryption_key=None)
         with pytest.raises(RuntimeError, match="JWT"):
             validate_prod_secrets(s)
@@ -212,7 +212,7 @@ class TestGetLogger:
         assert get_logger().name == "caremate"
 
     def test_invalid_log_level_falls_back_to_info(self, monkeypatch):
-        monkeypatch.setenv("CAREMMATE_LOG_LEVEL", "NOT_A_LEVEL")
+        monkeypatch.setenv("CAREMATE_LOG_LEVEL", "NOT_A_LEVEL")
         get_settings.cache_clear()
         try:
             logger = get_logger("unit_test_logger_3")
@@ -221,7 +221,7 @@ class TestGetLogger:
             get_settings.cache_clear()
 
     def test_valid_log_level_applied(self, monkeypatch):
-        monkeypatch.setenv("CAREMMATE_LOG_LEVEL", "DEBUG")
+        monkeypatch.setenv("CAREMATE_LOG_LEVEL", "DEBUG")
         get_settings.cache_clear()
         try:
             logger = get_logger("unit_test_logger_4")

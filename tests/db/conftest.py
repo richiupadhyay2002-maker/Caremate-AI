@@ -36,7 +36,7 @@ def engine(_db_url):
     get_engine.cache_clear()
     from caremate.utils.config import get_settings
     get_settings.cache_clear()
-    os.environ["CAREMMATE_DATABASE_URL"] = str(_db_url)
+    os.environ["CAREMATE_DATABASE_URL"] = str(_db_url)
     eng = init_db(db_url=str(_db_url), drop_all=True)
     return eng
 

@@ -20,7 +20,7 @@ from caremate.utils.config import get_settings
 
 # Use a dedicated test DB file to avoid clobbering dev data
 _TEST_DB = "sqlite:///caremate_test_api.db"
-os.environ["CAREMMATE_DATABASE_URL"] = _TEST_DB
+os.environ["CAREMATE_DATABASE_URL"] = _TEST_DB
 get_engine.cache_clear()
 get_settings.cache_clear()
 init_db(db_url=_TEST_DB, drop_all=True)

@@ -53,8 +53,8 @@ class Settings(BaseModel):
     # ------------------------------------------------------------------
     # Provider selection
     # ------------------------------------------------------------------
-    llm_provider: str = Field(default_factory=lambda: _getenv("CAREMMATE_LLM_PROVIDER", "mock"))
-    embedding_provider: str = Field(default_factory=lambda: _getenv("CAREMMATE_EMBEDDING_PROVIDER", "mock"))
+    llm_provider: str = Field(default_factory=lambda: _getenv("CAREMATE_LLM_PROVIDER", "mock"))
+    embedding_provider: str = Field(default_factory=lambda: _getenv("CAREMATE_EMBEDDING_PROVIDER", "mock"))
 
     # ------------------------------------------------------------------
     # API keys (optional — mock provider needs none)
@@ -66,52 +66,52 @@ class Settings(BaseModel):
     # ------------------------------------------------------------------
     # Model names
     # ------------------------------------------------------------------
-    openai_model: str = Field(default_factory=lambda: _getenv("CAREMMATE_OPENAI_MODEL", "gpt-4o-mini"))
-    openai_embedding_model: str = Field(default_factory=lambda: _getenv("CAREMMATE_OPENAI_EMBEDDING_MODEL", "text-embedding-3-small"))
-    anthropic_model: str = Field(default_factory=lambda: _getenv("CAREMMATE_ANTHROPIC_MODEL", "claude-3-haiku-20240320"))
-    groq_model: str = Field(default_factory=lambda: _getenv("CAREMMATE_GROQ_MODEL", "llama-3.1-8b-instant"))
+    openai_model: str = Field(default_factory=lambda: _getenv("CAREMATE_OPENAI_MODEL", "gpt-4o-mini"))
+    openai_embedding_model: str = Field(default_factory=lambda: _getenv("CAREMATE_OPENAI_EMBEDDING_MODEL", "text-embedding-3-small"))
+    anthropic_model: str = Field(default_factory=lambda: _getenv("CAREMATE_ANTHROPIC_MODEL", "claude-3-haiku-20240320"))
+    groq_model: str = Field(default_factory=lambda: _getenv("CAREMATE_GROQ_MODEL", "llama-3.1-8b-instant"))
 
         # ------------------------------------------------------------------
     # Vector store
     # ------------------------------------------------------------------
-    vector_dim: int = Field(default_factory=lambda: _getenv_int("CAREMMATE_VECTOR_DIM", 384))
-    top_k: int = Field(default_factory=lambda: _getenv_int("CAREMMATE_TOP_K", 5))
+    vector_dim: int = Field(default_factory=lambda: _getenv_int("CAREMATE_VECTOR_DIM", 384))
+    top_k: int = Field(default_factory=lambda: _getenv_int("CAREMATE_TOP_K", 5))
 
     # ------------------------------------------------------------------
     # Database (Phase 2 persistence)
     # ------------------------------------------------------------------
     database_url: str = Field(
-        default_factory=lambda: _getenv("CAREMMATE_DATABASE_URL", "sqlite:///caremate.db"),
+        default_factory=lambda: _getenv("CAREMATE_DATABASE_URL", "sqlite:///caremate.db"),
     )
     jwt_secret: str = Field(
-        default_factory=lambda: _getenv("CAREMMATE_JWT_SECRET") or _generate_secret(),
+        default_factory=lambda: _getenv("CAREMATE_JWT_SECRET") or _generate_secret(),
     )
     jwt_algorithm: str = Field(default="HS256")
     jwt_expire_minutes: int = Field(
-        default_factory=lambda: _getenv_int("CAREMMATE_JWT_EXPIRE_MINUTES", 1440),
+        default_factory=lambda: _getenv_int("CAREMATE_JWT_EXPIRE_MINUTES", 1440),
     )
 
     # ------------------------------------------------------------------
     # Production security enforcement
     # ------------------------------------------------------------------
     force_prod_secrets: bool = Field(
-        default_factory=lambda: _getenv_bool("CAREMMATE_FORCE_PROD_SECRETS", False),
+        default_factory=lambda: _getenv_bool("CAREMATE_FORCE_PROD_SECRETS", False),
     )
     encryption_key: Optional[str] = Field(
-        default_factory=lambda: _getenv("CAREMMATE_ENCRYPTION_KEY") or None,
+        default_factory=lambda: _getenv("CAREMATE_ENCRYPTION_KEY") or None,
     )
 
     # ------------------------------------------------------------------
     # File upload (Phase 3 document ingestion)
     # ------------------------------------------------------------------
     upload_dir: str = Field(
-        default_factory=lambda: _getenv("CAREMMATE_UPLOAD_DIR", "./uploads"),
+        default_factory=lambda: _getenv("CAREMATE_UPLOAD_DIR", "./uploads"),
     )
 
     # ------------------------------------------------------------------
     # Logging
     # ------------------------------------------------------------------
-    log_level: str = Field(default_factory=lambda: _getenv("CAREMMATE_LOG_LEVEL", "INFO"))
+    log_level: str = Field(default_factory=lambda: _getenv("CAREMATE_LOG_LEVEL", "INFO"))
 
     # ------------------------------------------------------------------
     # Convenience
@@ -148,19 +148,19 @@ def validate_prod_secrets(settings: "Settings | None" = None) -> None:
     """Refuse startup if production security is not properly configured.
 
     This check runs automatically during application startup **only** when
-    ``force_prod_secrets`` is ``True`` (``CAREMMATE_FORCE_PROD_SECRETS=true``).
+    ``force_prod_secrets`` is ``True`` (``CAREMATE_FORCE_PROD_SECRETS=true``).
 
     It guards against:
 
     * **JWT secret still being the auto-generated random default** — in
       development this is fine, but in production the secret should be
-      explicitly provided via ``CAREMMATE_JWT_SECRET`` and kept constant
+      explicitly provided via ``CAREMATE_JWT_SECRET`` and kept constant
       across instances.  When ``force_prod_secrets`` is set and the JWT
       secret was *not* read from the environment, we cannot distinguish an
       auto-generated secret from a default, so we require the env var to
       be present.
 
-    * **Missing encryption key** — ``CAREMMATE_ENCRYPTION_KEY`` should be
+    * **Missing encryption key** — ``CAREMATE_ENCRYPTION_KEY`` should be
       set to a valid Fernet key (``pip install cryptography && python -c
       "from cryptography.fernet import Fernet; print(Fernet.generate_key().decode())"``).
 
@@ -174,16 +174,16 @@ def validate_prod_secrets(settings: "Settings | None" = None) -> None:
 
     # In production, the JWT secret must be explicitly provided via env var
     # rather than auto-generated, so it is stable across restarts/instances.
-    if not os.environ.get("CAREMMATE_JWT_SECRET"):
+    if not os.environ.get("CAREMATE_JWT_SECRET"):
         raise RuntimeError(
-            "CAREMMATE_FORCE_PROD_SECRETS is enabled but CAREMMATE_JWT_SECRET "
+            "CAREMATE_FORCE_PROD_SECRETS is enabled but CAREMATE_JWT_SECRET "
             "is not set. Set a strong, stable secret in production."
         )
 
     if not settings.encryption_key:
         raise RuntimeError(
-            "CAREMMATE_FORCE_PROD_SECRETS is enabled but "
-            "CAREMMATE_ENCRYPTION_KEY is not set. "
+            "CAREMATE_FORCE_PROD_SECRETS is enabled but "
+            "CAREMATE_ENCRYPTION_KEY is not set. "
             "Generate a Fernet key: "
             "python -c \"from cryptography.fernet import Fernet; "
             "print(Fernet.generate_key().decode())\""

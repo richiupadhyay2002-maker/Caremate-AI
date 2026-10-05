@@ -24,6 +24,13 @@ build/
 # Local data and QA artifacts
 /*.db
 /uploads/
+/data/
+/faiss_data/
+/vector_store/
+*.faiss
+*.index
+*.pkl
+*.sqlite3
 /qa_*.mjs
 /*.png
 **/node_modules/

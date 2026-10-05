@@ -124,20 +124,20 @@ A `.env` file is supported via `python-dotenv` (loaded automatically at import t
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `CAREMMATE_LLM_PROVIDER` | `mock` | LLM provider: mock, openai, anthropic, groq |
-| `CAREMMATE_EMBEDDING_PROVIDER` | `mock` | Embedding provider selection |
+| `CAREMATE_LLM_PROVIDER` | `mock` | LLM provider: mock, openai, anthropic, groq |
+| `CAREMATE_EMBEDDING_PROVIDER` | `mock` | Embedding provider selection |
 | `OPENAI_API_KEY` | (none) | OpenAI API key |
 | `ANTHROPIC_API_KEY` | (none) | Anthropic API key |
 | `GROQ_API_KEY` | (none) | Groq API key |
-| `CAREMMATE_VECTOR_DIM` | `384` | Embedding vector dimension |
-| `CAREMMATE_TOP_K` | `5` | Number of chunks to retrieve |
-| `CAREMMATE_LOG_LEVEL` | `INFO` | Logging level |
+| `CAREMATE_VECTOR_DIM` | `384` | Embedding vector dimension |
+| `CAREMATE_TOP_K` | `5` | Number of chunks to retrieve |
+| `CAREMATE_LOG_LEVEL` | `INFO` | Logging level |
 
 ## Testing
 
-- 56 security test cases + 32 existing tests = 88 total
-- All tests pass with zero API keys required
-- Run with: `pytest tests/ -v`
+- Run the suite with `pytest tests/ -v`; GitHub Actions also runs it on pushes
+  and pull requests to `main`.
+- The regression tests use mock providers and do not require API keys.
 
 ## Security & Privacy (Phase 5)
 
@@ -168,9 +168,9 @@ headers automatically via middleware. Ensure the reverse proxy injects
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `CAREMMATE_JWT_SECRET` | (random) | JWT signing secret; auto-generated if unset |
-| `CAREMMATE_FORCE_PROD_SECRETS` | `false` | Refuse startup if JWT secret is unset/default |
-| `CAREMMATE_ENCRYPTION_KEY` | (none) | Fernet key for at-rest field encryption |
+| `CAREMATE_JWT_SECRET` | (random) | JWT signing secret; auto-generated if unset |
+| `CAREMATE_FORCE_PROD_SECRETS` | `false` | Refuse startup if JWT secret is unset/default |
+| `CAREMATE_ENCRYPTION_KEY` | (none) | Fernet key for at-rest field encryption |
 
 ## Data Flow Example
 
@@ -185,7 +185,6 @@ headers automatically via middleware. Ensure the reverse proxy injects
 
 If nutrition-related, the `MalnutritionWatcher` runs silently afterward, generating
 doctor-only alerts based on albumin levels, weight loss, BMI, and appetite assessment.
-
 
 
 

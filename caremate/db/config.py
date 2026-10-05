@@ -1,6 +1,6 @@
 """Database configuration — engine creation, URL parsing, and pgvector setup.
 
-The database URL is read from the ``CAREMMATE_DATABASE_URL`` environment
+The database URL is read from the ``CAREMATE_DATABASE_URL`` environment
 variable (with ``postgresql+psycopg://...``) or a SQLite fallback for local
 development/testing.
 """
@@ -29,11 +29,11 @@ def _get_database_url() -> str:
     """Return the SQLAlchemy database URL.
 
     Priority:
-      1. ``CAREMMATE_DATABASE_URL`` env var (explicit).
+      1. ``CAREMATE_DATABASE_URL`` env var (explicit).
       2. ``DATABASE_URL`` env var (common convention).
       3. SQLite file at ``./caremate.db`` (zero-config dev/test).
     """
-    url = os.environ.get("CAREMMATE_DATABASE_URL") or os.environ.get("DATABASE_URL")
+    url = os.environ.get("CAREMATE_DATABASE_URL") or os.environ.get("DATABASE_URL")
     if url:
         return url.strip()
     # SQLite fallback — works for tests without any external service

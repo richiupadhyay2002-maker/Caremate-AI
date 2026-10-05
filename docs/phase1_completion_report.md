@@ -102,7 +102,7 @@ A `.env` file has been created with a Groq API key configured. The system
 auto-loads `.env` via `python-dotenv` at import time. To use the Groq provider:
 
 1. Install the SDK: `pip install groq` (from the `[providers]` optional group)
-2. Set `CAREMMATE_LLM_PROVIDER=groq` in `.env`
+2. Set `CAREMATE_LLM_PROVIDER=groq` in `.env`
 3. The API key is already configured in `.env`
 
 Current default: `mock` (zero API keys required, all tests pass).

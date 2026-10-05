@@ -4,7 +4,7 @@ Run with::
 
     uvicorn caremate.api.main:app --reload
     # or with a specific database:
-    CAREMMATE_DATABASE_URL=sqlite:///caremate_test.db uvicorn caremate.api.main:app --reload
+    CAREMATE_DATABASE_URL=sqlite:///caremate_test.db uvicorn caremate.api.main:app --reload
 """
 
 from __future__ import annotations
@@ -56,7 +56,7 @@ app = FastAPI(
 )
 
 # CORS — allow the Next.js frontend origin(s) and localhost for development
-_origins_env = os.environ.get("CAREMMATE_CORS_ORIGINS", "")
+_origins_env = os.environ.get("CAREMATE_CORS_ORIGINS", "")
 if _origins_env:
     origins = _origins_env.split(",")
 else:
