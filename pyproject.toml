@@ -9,7 +9,7 @@ description = "Caremate AI — Safety-checked, provider-agnostic RAG and agent p
 readme = "README.md"
 requires-python = ">=3.10"
 license = {text = "MIT"}
-authors = [{name = "Caremate AI Team"}]
+authors = [{name = "Richi Upadhyay"}]
 dependencies = [
     "pydantic>=2.0",
     "python-dotenv>=1.0",

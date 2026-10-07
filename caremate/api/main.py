@@ -35,12 +35,16 @@ async def lifespan(app: FastAPI):
     # In production mode, refuse to boot if required secrets are missing
     validate_prod_secrets()
     init_db()
-    # Seed demo accounts if no users exist yet
-    try:
-        from caremate.scripts.seed import seed_demo
-        seed_demo()
-    except Exception as exc:  # noqa: BLE001
-        logger.warning("Seed failed: %s", exc)
+    # Seed demo accounts for local development; never when production
+    # secrets are enforced (the demo passwords are public).
+    if settings.force_prod_secrets:
+        logger.info("Skipping demo seed (CAREMATE_FORCE_PROD_SECRETS=true)")
+    else:
+        try:
+            from caremate.scripts.seed import seed_demo
+            seed_demo()
+        except Exception as exc:  # noqa: BLE001
+            logger.warning("Seed failed: %s", exc)
     yield
     logger.info("Shutting down Caremate AI API")
 

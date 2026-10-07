@@ -85,7 +85,7 @@ Document → Retrieval → Summarization → Citation → Safety → Response
 | File | Description |
 |------|-------------|
 | `chunker.py` | `SectionAwareChunker` — 18 medical section patterns, overlap chunking |
-| `vector_store.py` | `PatientIsolatedVectorStore` — FAISS + patient_id filtering |
+| `vector_store.py` | `PatientIsolatedVectorStore` — in-memory FAISS + patient_id filtering (used by the standalone `CarematePipeline`/CLI) |
 | `retriever.py` | `HybridRetriever` — BM25 + embedding similarity fusion |
 | `embeddings.py` | `EmbeddingManager` — caching layer over embedding providers |
 
@@ -176,7 +176,7 @@ headers automatically via middleware. Ensure the reverse proxy injects
 
 1. User submits a medical query through the CLI or NutritionQA
 2. **DocumentAgent** chunks any raw documents (using `SectionAwareChunker`)
-3. **RetrievalAgent** builds a hybrid index (BM25 + FAISS embeddings) and retrieves top-k relevant chunks
+3. **RetrievalAgent** builds a hybrid index (BM25 + embedding similarity) and retrieves top-k relevant chunks. The CLI pipeline uses the in-memory FAISS store; the API uses the database-backed `PgVectorStore` (`caremate/db/vector_store.py`: pgvector on PostgreSQL, cosine similarity computed in Python on SQLite)
 4. **SummarizationAgent** condenses retrieved content via LLM
 5. **CitationAgent** generates verifiable citations with source snippets
 6. **SafetyAgent** runs 3 checks (injection, red-flag symptoms, drug-food interactions)

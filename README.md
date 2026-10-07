@@ -1,10 +1,14 @@
 # Caremate AI
 
-![Pytest](https://github.com/richiupadhyay2002-maker/Caremate-AI/actions/workflows/tests.yml/badge.svg)
+[![Pytest](https://github.com/richiupadhyay2002-maker/CareMate-AI/actions/workflows/tests.yml/badge.svg)](https://github.com/richiupadhyay2002-maker/CareMate-AI/actions/workflows/tests.yml)
 
-A demonstration healthcare application combining a patient and doctor web
-frontend with a Python API, persistence layer, and safety-checked, provider-
-agnostic RAG and multi-agent pipeline.
+A demonstration healthcare project with two parts:
+
+- a **Python API** (FastAPI, SQLAlchemy) with authentication, patient-scoped
+  data access, document ingestion, and a safety-checked, provider-agnostic RAG
+  and six-agent pipeline, covered by a pytest suite; and
+- a **Next.js frontend** for patients and doctors that runs as a self-contained
+  demo on synthetic data (see [Frontend demo mode](#frontend-demo-mode)).
 
 > **Medical disclaimer:** Caremate AI is a demonstration and information tool,
 > not a medical device or substitute for professional medical advice,
@@ -18,18 +22,23 @@ agnostic RAG and multi-agent pipeline.
 
 ## Demo
 
-- [Watch or download the Caremate AI demo recording (MP4)](recordings/20261005-2147-18.1466588.mp4)
+- [Watch or download the Caremate AI demo recording (MP4)](recordings/caremate-demo.mp4)
 
 ![Patient care timeline demo screenshot](docs/screenshots/care-timeline-demo.png)
 
 ## Features
 
 - **Frontend:** Next.js and React patient and doctor portals for reports,
-  timeline, symptom journal, nutrition, and dashboards.
-- **API and database:** Python API, SQLAlchemy persistence, SQLite by default,
-  Alembic migrations, authentication, and patient-scoped data access.
-- **RAG pipeline:** Section-aware document chunking, patient-isolated FAISS
-  retrieval, hybrid search, citations, and structured responses.
+  timeline, symptom journal, nutrition, and dashboards (demo mode, see below).
+- **API and database:** FastAPI, SQLAlchemy persistence, SQLite by default
+  (PostgreSQL + pgvector supported), Alembic migrations, JWT authentication,
+  doctor/patient role checks, and patient-scoped data access.
+- **RAG pipeline:** Section-aware document chunking, patient-isolated
+  retrieval, hybrid BM25 + embedding search, citations, and structured
+  responses. The API stores chunks in the database (`caremate/db/vector_store.py`:
+  pgvector on PostgreSQL, cosine similarity in Python on SQLite); the
+  standalone CLI pipeline uses an in-memory FAISS store
+  (`caremate/retrieval/vector_store.py`).
 - **Six-agent workflow:** Document, retrieval, summarization, citation, safety,
   and response agents.
 - **Safety checks:** Prompt-injection detection, emergency red-flag symptom
@@ -73,6 +82,30 @@ The Next.js development server starts on port 3000 and uses
 To enable real LLM providers, install the optional integrations with
 `python -m pip install -e ".[providers]"` and configure their API keys.
 
+### Demo accounts
+
+For local development the API seeds three demo accounts on startup (skipped
+when `CAREMATE_FORCE_PROD_SECRETS=true`): `patient@caremate.ai`,
+`doctor@caremate.ai`, and `admin@caremate.ai`. Their development-only
+passwords are defined in `caremate/scripts/seed.py`; do not use them outside
+local demos.
+
+### Frontend demo mode
+
+The frontend's AI features (Ask, Nutrition, Reports, Dashboard insights,
+Doctor Ask/Risk, Appointments, Journal) run on `frontend/src/lib/ai-engine.ts`,
+a deterministic, template-based engine over the synthetic record in
+`frontend/src/lib/demo-data.ts`, so the deployed demo works without an API or
+LLM keys. These pages do not call the Python RAG pipeline. The backend
+pipeline is exercised through the API (`POST /patients/{patient_id}/ask`, see `/docs`), the CLI,
+and the test suite; `frontend/src/lib/api.ts` contains the API client.
+
+### Verification status
+
+The pytest suite and the frontend production build run without external
+services. Real LLM providers (OpenAI, Anthropic, Groq) and PostgreSQL/pgvector
+are supported in code but are not exercised by the test suite or CI.
+
 ## Safety Test Results
 
 These are pass rates for the small, hand-authored regression examples in the
@@ -99,12 +132,13 @@ caremate/                 Python API, agents, providers, retrieval, guardrails
   db/                     Database models, repositories, and sessions
   agents/                 Six pipeline agents
   guardrails/             Injection, symptom, and interaction checks
-  retrieval/               Chunking, embeddings, and FAISS retrieval
-frontend/                 Next.js patient and doctor web application
-alembic/                  Database migration configuration
+  retrieval/              Chunking, embeddings, hybrid retriever, in-memory FAISS store
+  orchestration/          API ask/nutrition flows over the database-backed vector store
+  scripts/                Demo data seeding
+frontend/                 Next.js patient and doctor web application (demo mode)
+alembic/                  Database migrations (alembic/versions/)
 tests/                    Python unit, API, database, and security tests
 docs/                     Architecture documentation and demo screenshot
-migrations/               Database migration scripts
 recordings/               Project demonstration video
 ```
 
