@@ -84,8 +84,9 @@ To enable real LLM providers, install the optional integrations with
 
 ### Demo accounts
 
-For local development the API seeds three demo accounts on startup (skipped
-when `CAREMATE_FORCE_PROD_SECRETS=true`): `patient@caremate.ai`,
+For local development the API seeds three demo accounts on startup. With
+`CAREMATE_FORCE_PROD_SECRETS=true` seeding is skipped and any existing demo
+account that still uses its demo password is deactivated: `patient@caremate.ai`,
 `doctor@caremate.ai`, and `admin@caremate.ai`. Their development-only
 passwords are defined in `caremate/scripts/seed.py`; do not use them outside
 local demos.

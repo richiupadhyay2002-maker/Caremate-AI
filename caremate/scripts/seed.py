@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from caremate.api.security import hash_password
+from caremate.api.security import hash_password, verify_password
 from caremate.db.models_clinical import LabResult, Medication
 from caremate.db.models_core import Organization, User, UserRole
 from caremate.db.models_docs import MedicalDocument
@@ -25,6 +25,12 @@ DEMO_DOCTOR_PASSWORD = "doctor123"
 DEMO_DOCTOR_ID = "D0001"
 
 DEMO_ORG = "Caremate Demo Clinic"
+
+_DEMO_CREDENTIALS = (
+    (DEMO_ADMIN_EMAIL, DEMO_ADMIN_PASSWORD),
+    (DEMO_PATIENT_EMAIL, DEMO_PATIENT_PASSWORD),
+    (DEMO_DOCTOR_EMAIL, DEMO_DOCTOR_PASSWORD),
+)
 
 SAMPLE_CLINICAL_NOTE = """CHIEF COMPLAINT
 Persistent fatigue and shortness of breath on exertion for 3 months.
@@ -64,6 +70,29 @@ def _get_org(db):
         db.flush()
         logger.info("Created demo organization: %s", DEMO_ORG)
     return org
+
+
+def disable_demo_accounts() -> int:
+    """Deactivate demo accounts that still use their public password.
+
+    Called at startup in production mode so a database seeded during
+    development cannot be logged into with the published demo credentials.
+    Returns the number of accounts disabled.
+    """
+    factory = get_session_factory()
+    db = factory()
+    disabled = 0
+    try:
+        for email, password in _DEMO_CREDENTIALS:
+            user = db.query(User).filter(User.email == email).first()
+            if user is not None and user.is_active and verify_password(password, user.hashed_password):
+                user.is_active = False
+                disabled += 1
+                logger.warning("Disabled demo account %s (still uses the public demo password)", email)
+        db.commit()
+    finally:
+        db.close()
+    return disabled
 
 
 def seed_demo() -> None:

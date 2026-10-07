@@ -39,6 +39,8 @@ async def lifespan(app: FastAPI):
     # secrets are enforced (the demo passwords are public).
     if settings.force_prod_secrets:
         logger.info("Skipping demo seed (CAREMATE_FORCE_PROD_SECRETS=true)")
+        from caremate.scripts.seed import disable_demo_accounts
+        disable_demo_accounts()
     else:
         try:
             from caremate.scripts.seed import seed_demo

@@ -104,7 +104,8 @@ def _decode_token(token: str) -> dict:
 def login(form: LoginRequest, db: Session = Depends(get_db)):
     """Exchange credentials for a JWT bearer token."""
     user = db.query(User).filter(User.email == form.email).first()
-    if user is None or not verify_password(form.password, user.hashed_password):
+    if (user is None or not user.is_active
+            or not verify_password(form.password, user.hashed_password)):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
                             detail="Incorrect email or password",
                             headers={"WWW-Authenticate": "Bearer"})
