@@ -30,7 +30,7 @@ orchestration, zero-API-key operation, and patient data isolation.
 - **factory.py** — `LLMFactory` with auto-selection, provider caching, zero-key fallback
 
 ### Retrieval Layer
-- **chunker.py** — `SectionAwareChunker` with 18 medical section header patterns
+- **chunker.py** — `SectionAwareChunker` with 22 medical section header patterns
   (History, Medications, DIETARY INSTRUCTIONS, Lab Results, etc.)
 - **vector_store.py** — `PatientIsolatedVectorStore` using FAISS with patient_id
   enforcement (raises `ValueError` if empty patient_id) and search-time filtering
@@ -98,12 +98,14 @@ response generation, returning a safe refusal.
 
 ## Configuration
 
-A `.env` file has been created with a Groq API key configured. The system
-auto-loads `.env` via `python-dotenv` at import time. To use the Groq provider:
+Settings are read from environment variables and an optional `.env` file,
+auto-loaded via `python-dotenv` at import time. Copy `.env.example` to `.env`
+and fill in your own values; no keys are required to run the mock-provider
+default. To use a real provider:
 
-1. Install the SDK: `pip install groq` (from the `[providers]` optional group)
-2. Set `CAREMATE_LLM_PROVIDER=groq` in `.env`
-3. The API key is already configured in `.env`
+1. Install the SDK: `python -m pip install -e ".[providers]"`
+2. Set `CAREMATE_LLM_PROVIDER` (for example `groq`) in `.env`
+3. Add your own API key for that provider
 
 Current default: `mock` (zero API keys required, all tests pass).
 
@@ -113,6 +115,12 @@ Current default: `mock` (zero API keys required, all tests pass).
 - **Phase 3**: Web UI / API endpoints
 - **Phase 4**: Multi-turn conversation memory
 - **Phase 5**: Integration with EHR systems and FHIR
+
+> **Note (superseded):** this report is a dated Phase 1 snapshot. The web UI,
+> API endpoints, and Phase 5 security work described above as future work have
+> since been implemented — see [docs/architecture.md](architecture.md). The
+> 32/32 figure covers the Phase 1 regression tests only; the full suite has
+> grown well beyond that.
 
 
 
