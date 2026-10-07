@@ -16,16 +16,13 @@ agnostic RAG and multi-agent pipeline.
 > screenshots are synthetic demonstration data, not real medical records.
 > Do not commit real patient information, credentials, or private uploads.
 
-## Demo
-
-- [Watch or download the Caremate AI demo recording (MP4)](recordings/20261005-2147-18.1466588.mp4)
-
-![Patient care timeline demo screenshot](docs/screenshots/care-timeline-demo.png)
-
 ## Features
 
 - **Frontend:** Next.js and React patient and doctor portals for reports,
-  timeline, symptom journal, nutrition, and dashboards.
+  timeline, symptom journal, nutrition, and dashboards. The portals call the
+  Python API for records, documents, and authentication; the chat/answer views
+  currently render deterministic template responses from the bundled demo data
+  (`frontend/src/lib/ai-engine.ts`) rather than live RAG output.
 - **API and database:** Python API, SQLAlchemy persistence, SQLite by default,
   Alembic migrations, authentication, and patient-scoped data access.
 - **RAG pipeline:** Section-aware document chunking, patient-isolated FAISS
@@ -36,6 +33,12 @@ agnostic RAG and multi-agent pipeline.
   handling, and drug-food interaction checks.
 - **Provider options:** Mock providers for offline development, with optional
   OpenAI, Anthropic, and Groq integrations.
+
+## Demo
+
+- [Watch or download the Caremate AI demo recording (MP4)](recordings/20261005-2147-18.1466588.mp4)
+
+![Patient care timeline demo screenshot](docs/screenshots/care-timeline-demo.png)
 
 ## Quick Start
 
@@ -101,10 +104,9 @@ caremate/                 Python API, agents, providers, retrieval, guardrails
   guardrails/             Injection, symptom, and interaction checks
   retrieval/               Chunking, embeddings, and FAISS retrieval
 frontend/                 Next.js patient and doctor web application
-alembic/                  Database migration configuration
+alembic/                  Alembic config; alembic/versions/ holds the migration scripts
 tests/                    Python unit, API, database, and security tests
 docs/                     Architecture documentation and demo screenshot
-migrations/               Database migration scripts
 recordings/               Project demonstration video
 ```
 

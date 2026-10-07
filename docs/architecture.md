@@ -84,7 +84,7 @@ Document → Retrieval → Summarization → Citation → Safety → Response
 
 | File | Description |
 |------|-------------|
-| `chunker.py` | `SectionAwareChunker` — 18 medical section patterns, overlap chunking |
+| `chunker.py` | `SectionAwareChunker` — 22 medical section patterns, overlap chunking |
 | `vector_store.py` | `PatientIsolatedVectorStore` — FAISS + patient_id filtering |
 | `retriever.py` | `HybridRetriever` — BM25 + embedding similarity fusion |
 | `embeddings.py` | `EmbeddingManager` — caching layer over embedding providers |

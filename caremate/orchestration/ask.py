@@ -46,24 +46,30 @@ class AskMedicalRecordOrchestrator:
     ):
         self._db = db_session
         settings = get_settings()
+        self._llm = llm
         self._embedding_provider = embedding_provider or (
             MockEmbeddingProvider(dim=settings.vector_dim) if settings.is_mock_mode
-            else embedding_provider
+            else None
         )
         self._pipeline: Optional[CarematePipeline] = None
         self._repo = PatientRepository(db_session)
 
     @property
     def pipeline(self) -> CarematePipeline:
-        """Lazily build a CarematePipeline wired with a PgVectorStore."""
+        """Lazily build a CarematePipeline wired with a PgVectorStore.
+
+        Providers follow the configured settings: mock providers are used when
+        no real provider is configured, otherwise ``LLMFactory`` selects the
+        configured provider. Passing ``use_mock`` would force mock output, so
+        it is intentionally omitted here.
+        """
         if self._pipeline is None:
             settings = get_settings()
             store = PgVectorStore(session=self._db, dim=settings.vector_dim)
             self._pipeline = CarematePipeline(
-                llm=MockLLMProvider() if True else None,
+                llm=self._llm,
                 embedding_provider=self._embedding_provider,
                 vector_store=store,
-                use_mock=True,
             )
         return self._pipeline
 
